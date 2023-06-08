@@ -27,6 +27,8 @@ import com.example.composeappbarbotombarnavigation.ui.theme.ComposeAppBarBotomBa
 import androidx.compose.material.*
 
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -50,14 +52,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             navController = rememberNavController()
 
-            MyScaffold(navController)
+//            MyScaffold(navController)
+            SimpleDrawer( navController )
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyScaffold(navcontroller: NavHostController) {
+fun MyScaffold(navcontroller: NavHostController, drawerState: DrawerState) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     Scaffold(
@@ -77,36 +80,7 @@ fun MyScaffold(navcontroller: NavHostController) {
             ) { Text("Show snackbar") }
         },
         topBar = {
-            TopAppBar(
-                title = {
-//                    Text(text = "Top App Bar")
-                    Row() {
-                        IconButton(onClick = { }) {
-                            Icon(Icons.Filled.Menu, contentDescription = "Меню")
-                        }
-                        Text("METANIT.COM", fontSize = 22.sp)
-                        Spacer(Modifier.weight(1f, true))
-
-                        IconButton(onClick = { }) {
-                            Icon(Icons.Filled.Info, contentDescription = "Информация о приложении")
-                        }
-                        IconButton(onClick = { navcontroller.navigate("1to2") }) {
-                            Icon(Icons.Filled.Search, contentDescription = "Поиск")
-                        }
-
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
-                    }
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = Color.Blue,
-                ),
-
-                )
+          MyTopBar(navcontroller)
         }, content = {
             Column(
                 modifier = Modifier
@@ -119,11 +93,17 @@ fun MyScaffold(navcontroller: NavHostController) {
                 Spacer(modifier = Modifier.weight(1f))
 
                 Navigation(navcontroller = navcontroller)
+
+                Button(onClick = { scope.launch { drawerState.open() } }) {
+                    Text("Click to open")
+                }
                 Spacer(modifier = Modifier.weight(1f))
 
             }
         })
 }
+
+
 
 
 
