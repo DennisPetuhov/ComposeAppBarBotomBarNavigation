@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,18 +20,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopBar(navcontroller:NavHostController) {
+fun MyTopBar(navcontroller:NavHostController,coroutineScope: CoroutineScope, drawerState: DrawerState) {
     TopAppBar(
         title = {
 //                    Text(text = "Top App Bar")
             Row() {
-                IconButton(onClick = { }) {
+                IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
                     Icon(Icons.Filled.Menu, contentDescription = "Меню")
                 }
-                Text("WWWW", fontSize = 22.sp)
+                Text("Settings", fontSize = 22.sp)
                 Spacer(Modifier.weight(1f, true))
 
                 IconButton(onClick = { navcontroller.navigate("1to2")}) {

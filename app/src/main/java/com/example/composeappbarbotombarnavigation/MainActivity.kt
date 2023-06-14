@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.composeappbarbotombarnavigation.ui.theme.myNavExtension1
 import com.example.composeappbarbotombarnavigation.ui.theme.myNavExtesion2
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -80,7 +81,10 @@ fun MyScaffold(navcontroller: NavHostController, drawerState: DrawerState) {
             ) { Text("Show snackbar") }
         },
         topBar = {
-          MyTopBar(navcontroller)
+          MyTopBar(navcontroller, drawerState= drawerState, coroutineScope = scope )
+        },
+        bottomBar = {
+          MyBottomBar(navcontroller)
         }, content = {
             Column(
                 modifier = Modifier
@@ -97,6 +101,8 @@ fun MyScaffold(navcontroller: NavHostController, drawerState: DrawerState) {
                 Button(onClick = { scope.launch { drawerState.open() } }) {
                     Text("Click to open")
                 }
+
+                MyEditText()
                 Spacer(modifier = Modifier.weight(1f))
 
             }
